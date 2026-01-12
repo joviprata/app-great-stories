@@ -1,0 +1,498 @@
+<!-- Página Home: -->
+
+<ion-content [fullscreen]="true" *ngIf="fase === 1">
+
+  <div id="container" (click)=avancarFase()>
+    <img src = "assets/imgs/logo.png" width="34%">
+  </div>
+  <div class="loading-icon-container" >
+    <img src="assets/imgs/loading-icon.png" alt="Ícone de carregamento" class="loading-icon">
+  </div>
+
+</ion-content>
+
+
+<!-- Página Login: -->
+
+<ion-content [fullscreen]="true" *ngIf="fase === 2" [@slideIn]>
+  <div class="header-container">
+    <img src="assets/imgs/logotitle.png" alt="Logotitle" class="logo" />
+  </div>
+
+
+  <swiper-container
+  [loop]="false"
+  [pagination]="true"
+  id="custom-slide" 
+  style="margin-top: 5vw;">
+    <swiper-slide>
+      <img src="assets/imgs/login/login1.png" alt="Login Slide 1" width="88%"
+      style="margin-bottom: 11vw;"/>
+    </swiper-slide>
+    <swiper-slide>
+      <img src="assets/imgs/login/login2.png" alt="Login Slide 2" width="88%"
+      style="margin-bottom: 10vw;"/>
+    </swiper-slide>
+    <swiper-slide>
+      <img src="assets/imgs/login/login3.png" alt="Login Slide 3" width="88%"
+      style="margin-bottom: 10vw;"/>
+    </swiper-slide>
+  </swiper-container>
+
+  <div class="login-text-container">
+    <div class="h2"> Read your<br>
+      favorite stories</div>
+      
+    <div class="body-xlarge-regular">From Winnie the Pooh to The Adventures of Tom Sawyer, we have a wide plethora of books to satisfy your needs for a good storytelling.</div>
+  </div>
+
+  <ion-grid >
+    <ion-row>
+      <ion-col size="12">
+        <button class="big-button animated-button" style="background-color: var(--ion-color-primary); color: var(--ion-color-primary-contrast);" (click)="avancarFase()">
+        Create an account
+        </button>
+      </ion-col>
+      <ion-col size="12">
+        <button class="big-button" style="background-color: var(--ion-color-secondary); color: var(--ion-color-secondary-contrast);">
+          I already have an account
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+
+<!-- Página Cadastro Form: -->
+
+<ion-content [fullscreen]="true" *ngIf="fase === 3" [@slideIn]>
+  <div class="header-content">
+    <img src="assets/imgs/back-arrow.png" alt="Back Arrow" class="back-arrow" (click)="voltarSubFase()"> 
+    <img src="assets/imgs/logotitle.png" alt="Logotitle" class="logo" />
+  </div>
+
+
+  <ng-container *ngIf="subfase === 1">
+    <img src="assets/imgs/progress-bar-1.png" alt="Progress Bar 1" class="progress-bar-image"/>
+    <div class="form-phase">
+      <div class="text-container">
+        <div class="h5">
+          Complete your data
+        </div>
+        <div class="body-medium-semibold">
+          Select one of the options below that best describes you.
+        </div>
+      </div>
+      <button class="big-button bottom-button" color="primary" 
+      [disabled]="!tipoPessoaSelecionada"
+      (click)="avancarSubFase()">Continue</button>
+    </div>
+
+    <label class="big-radio">
+      <div class="label-container">
+        <img src="assets/imgs/pf-icon.png" alt="Physical person" class="icon-space">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Physical person
+        <input type="radio" name="tipoPessoa" value="pf" 
+               [(ngModel)]="tipoPessoaSelecionada" 
+               (change)="onTipoPessoaChange('pf')"
+               style="margin-left: auto;">
+      </div>
+    </label>
+  
+    <label class="big-radio">
+      <div class="label-container">
+        <img src="assets/imgs/pj-icon.png" alt="Legal entity" class="icon-space">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Legal entity
+        <input type="radio" name="tipoPessoa" value="pj" 
+               [(ngModel)]="tipoPessoaSelecionada" 
+               (change)="onTipoPessoaChange('pj')"
+               style="margin-left: auto;">
+      </div>
+    </label>
+  </ng-container>
+  
+  <ng-container *ngIf="subfase === 2">
+    <img src="assets/imgs/progress-bar-2.png" alt="Progress Bar 2" class="progress-bar-image"/>
+    <div class="form-phase">
+      <div class="text-container">
+        <div class="h5">
+          Set your profile picture
+        </div>
+        <div class="body-medium-semibold">
+          Enhance your profile with a personal touch by adding a photo. Let your photo tell your story.
+        </div>
+      </div>
+
+      <div (click)="definirFotoPerfil()" style="margin: 5vw auto; width: 65vw; height: 65vw; border-radius: 50vw; border: 4px solid #068fff; display: flex; justify-content: center; align-items: center;">
+        <img style="border-radius: 50%; width: 100%; height: 100%; object-fit: cover;" [src]="imagemPerfil || imagemPadrao" alt="">
+      </div>
+      <img style="position: relative; bottom: 16vw; right: -61.5vw; width: 10.7vw; height: 10.7vw; border-radius: 50%;" src="assets\imgs\plus-button-icon.png" (click)="definirFotoPerfil()">
+
+      <button class="big-button bottom-button" color="primary" (click)="avancarSubFase()" [disabled]="!imagemPerfil">Continue</button>
+    </div>
+  </ng-container>
+  
+  <ng-container *ngIf="subfase === 3">
+    <img src="assets/imgs/progress-bar-3.png" alt="Progress Bar 3" class="progress-bar-image"/>
+    <div class="form-phase">
+      <div class="text-container">
+        <div class="h5">
+          Complete your data
+        </div>
+        <div class="body-medium-semibold">
+          Fill in your personal data to continue your registration.
+        </div>
+      </div>
+      <button class="big-button bottom-button" color="primary" (click)="avancarSubFase()" [disabled]="!todosInputsPessoaisPreenchidos()">Continue</button>
+    </div>
+    <input class="big-input" type="text" placeholder="Full Name" style="text-transform: capitalize;" maxlength="55" [(ngModel)]="dadosPessoais.nomeCompleto" (ngModelChange)="verificarInputs()">
+
+    <ng-container *ngIf="tipoPessoaSelecionada === 'pf'">
+      <input class="big-input" type="text" placeholder="CPF" [(ngModel)]="dadosPessoais.cpf" (ngModelChange)="verificarInputs()" (input)="mascaraCPF($event)" maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}">
+    </ng-container>
+    <ng-container *ngIf="tipoPessoaSelecionada === 'pj'">
+      <input class="big-input" type="text" placeholder="CNPJ" [(ngModel)]="dadosPessoais.cnpj" (ngModelChange)="verificarInputs()" (input)="mascaraCNPJ($event)" maxlength="18" pattern="\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}">
+    </ng-container>
+
+    <input class="big-input" type="text" placeholder="Birth date" onfocus="(this.type='date')" onblur="if(!this.value) this.type='text'" [(ngModel)]="dadosPessoais.dataNascimento" (ngModelChange)="verificarInputs()" pattern="\d{2}-\d{2}-\d{4}">
+
+
+
+    <!-- <input 
+    class="big-input" 
+    type="text" 
+    placeholder="Data de nascimento" 
+    [(ngModel)]="dadosPessoais.dataNascimento" 
+    (ngModelChange)="verificarInputsPessoais()" 
+
+  > -->
+
+    <select class="big-dropdown" placeholder="Gender" [(ngModel)]="dadosPessoais.genero" (ngModelChange)="verificarInputs()">
+      <option value="" disabled selected hidden>Gender</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      <option value="non-binary">Non-binary</option>
+      <option value="other">Other</option>
+    </select>
+    
+    <select class="big-dropdown" placeholder="Sexual Orientation" [(ngModel)]="dadosPessoais.orientacaoSexual" (ngModelChange)="verificarInputs()">
+      <option value="" disabled selected hidden>Sexual Orientation</option>
+      <option value="heterossexual">Heterossexual</option>
+      <option value="lgbtqqicaapff2k">LGBTQQICAAPFF2K+</option>
+      <option value="n-a">N/A</option>
+    </select>
+  </ng-container>
+  
+  <ng-container *ngIf="subfase === 4">
+    <img src="assets/imgs/progress-bar-4.png" alt="Progress Bar 4" class="progress-bar-image"/>
+    <div class="form-phase">
+      <div class="text-container">
+        <div class="body-medium-semibold">
+          Enter your address. We want to get to know you better and ensure that your experience with us is perfect.
+        </div>
+      </div>
+      <button class="big-button bottom-button" color="primary" (click)="avancarSubFase()" [disabled]="!todosInputsPreenchidos()">Continue</button>
+    </div>
+
+    <input class="big-input" type="text" placeholder="CEP" [(ngModel)]="endereco.cep" (ngModelChange)="verificarInputs()" (input)="mascaraCEP($event)" maxlength="9" pattern="\d{5}-\d{3}">
+
+
+    
+    <input class="big-input" type="text" placeholder="Street" [(ngModel)]="endereco.logradouro" (ngModelChange)="verificarInputs()" maxlength="100">
+    <input class="big-input" type="text" placeholder="Number" [(ngModel)]="endereco.numero" (ngModelChange)="verificarInputs()" maxlength="100">
+    <input class="big-input" type="text" placeholder="Complement" [(ngModel)]="endereco.complemento" (ngModelChange)="verificarInputs()" maxlength="100">
+    <input class="big-input" type="text" placeholder="Neighborhood" [(ngModel)]="endereco.bairro" (ngModelChange)="verificarInputs()" maxlength="100">
+    <select class="big-dropdown" [(ngModel)]="endereco.estado" (ngModelChange)="verificarInputs()">
+      <option value="" disabled selected hidden>State</option>
+      <option value="panem">Panem</option>
+      <option value="constant_distress">Constant Distress</option>
+      <option value="pure_joy">Pure Joy</option>
+      
+    </select>
+
+    <select class="big-dropdown" [(ngModel)]="endereco.cidade" (ngModelChange)="verificarInputs()">
+      <option value="" disabled selected hidden>City</option>
+      <option value="hogsmeade">Hogsmeade</option>
+      <option value="esgaroth">Esgaroth</option>
+      <option value="gotham">Gotham</option>
+    </select>
+  </ng-container>
+
+  <ng-container *ngIf="subfase === 5">
+    <img src="assets/imgs/progress-bar-5.png" alt="Progress Bar 5" class="progress-bar-image"/>
+    <div class="form-phase">
+      <div class="text-container">
+        <div class="h5">
+          Select 6 book genres you have more engagement
+        </div>
+        <div class="body-medium-semibold">
+          Select below the book genres that most identify with your profile
+        </div>
+      </div>
+      <button class="big-button bottom-button" color="primary" [disabled]="!isContinueButtonEnabled || !termsAccepted" (click)="avancarFase()">Continue</button>
+    
+
+    <div class="segments-grid">
+      <div class="segment" [class.selected]="isSelected('beleza')" (click)="toggleSelection('beleza')">
+        <img src="assets/imgs/emojis/1.png" alt="Beauty">
+        Beauty
+      </div>
+      <div class="segment" [class.selected]="isSelected('criancas')" (click)="toggleSelection('criancas')">
+        <img src="assets/imgs/emojis/2.png" alt="Children Stories">
+        Children Stories
+      </div>
+      <div class="segment" [class.selected]="isSelected('automoveis')" (click)="toggleSelection('automoveis')">
+        <img src="assets/imgs/emojis/3.png" alt="Racing">
+        Racing
+      </div>
+      <div class="segment" [class.selected]="isSelected('casa')" (click)="toggleSelection('casa')">
+        <img src="assets/imgs/emojis/4.png" alt="Home and Decoration">
+        Home and Decoration
+      </div>
+      <div class="segment" [class.selected]="isSelected('educacao')" (click)="toggleSelection('educacao')">
+        <img src="assets/imgs/emojis/5.png" alt="Education, Courses, and Training">
+        Education, Courses, and Training
+      </div>
+      <div class="segment" [class.selected]="isSelected('religiao')" (click)="toggleSelection('religiao')">
+        <img src="assets/imgs/emojis/6.png" alt="Religion">
+        Religion
+      </div>
+      <div class="segment" [class.selected]="isSelected('empreendedorismo')" (click)="toggleSelection('empreendedorismo')">
+        <img src="assets/imgs/emojis/7.png" alt="Entrepreneurship">
+        Entrepreneurship
+      </div>
+      <div class="segment" [class.selected]="isSelected('games')" (click)="toggleSelection('games')">
+        <img src="assets/imgs/emojis/8.png" alt="Games">
+        Games
+      </div>
+      <div class="segment" [class.selected]="isSelected('tv_filmes_e_series')" (click)="toggleSelection('tv_filmes_e_series')">
+        <img src="assets/imgs/emojis/9.png" alt="Cinematography">
+        Cinematography
+      </div>
+      <div class="segment" [class.selected]="isSelected('shows_e_entretenimento')" (click)="toggleSelection('shows_e_entretenimento')">
+        <img src="assets/imgs/emojis/10.png" alt="Entertainment">
+        Entertainment
+      </div>
+      <div class="segment" [class.selected]="isSelected('moda_e_acessorios')" (click)="toggleSelection('moda_e_acessorios')">
+        <img src="assets/imgs/emojis/11.png" alt="Fashion">
+        Fashion
+      </div>
+      <div class="segment" [class.selected]="isSelected('tecnologia')" (click)="toggleSelection('tecnologia')">
+        <img src="assets/imgs/emojis/12.png" alt="Technology">
+        Technology
+      </div>
+      <div class="segment" [class.selected]="isSelected('financas')" (click)="toggleSelection('financas')">
+        <img src="assets/imgs/emojis/13.png" alt="Finance">
+        Finance
+      </div>
+      <div class="segment" [class.selected]="isSelected('fitness_e_esportes')" (click)="toggleSelection('fitness_e_esportes')">
+        <img src="assets/imgs/emojis/14.png" alt="Fitness and Sports">
+        Fitness and Sports
+      </div>
+      <!-- <div class="segment" [class.selected]="isSelected('gastronomia')" (click)="toggleSelection('gastronomia')">
+        <img src="assets/imgs/emojis/15.png" alt="Gastronomia">
+        Gastronomia
+      </div>
+      <div class="segment" [class.selected]="isSelected('humor')" (click)="toggleSelection('humor')">
+        <img src="assets/imgs/emojis/16.png" alt="Humor">
+        Humor
+      </div>
+      <div class="segment" [class.selected]="isSelected('pet')" (click)="toggleSelection('pet')">
+        <img src="assets/imgs/emojis/17.png" alt="Pet">
+        Pet
+      </div> -->
+      <!-- <div class="segment" [class.selected]="isSelected('viagens_e_lazer')" (click)="toggleSelection('viagens_e_lazer')">
+        <img src="assets/imgs/emojis/18.png" alt="Viagens e Lazer">
+        Viagens e Lazer
+      </div>
+      <div class="segment" [class.selected]="isSelected('saude_e_cuidados_pessoais')" (click)="toggleSelection('saude_e_cuidados_pessoais')">
+        <img src="assets/imgs/emojis/19.png" alt="Saúde e Cuidados Pessoais">
+        Saúde e Cuidados Pessoais
+      </div> -->
+    </div>
+    <div class="login-text-container">
+      <label class="checkbox-container">
+        <input type="checkbox" class="invisible-checkbox" [(ngModel)]="termsAccepted">
+        <span class="body-xlarge-regular" style="color: #616977;">I agree to the <span style="text-decoration: underline; color: #068fff;">Terms and Conditions</span></span>
+      </label>
+    </div>
+  </div>
+
+    
+
+  </ng-container>.
+</ion-content>
+
+
+<!-- Página Cadastro Email: -->
+
+<ion-content [fullscreen]="true" *ngIf="fase === 4" class="margin" [@slideIn]>
+  <div class="header-content">
+    <img src="assets/imgs/back-arrow.png" alt="Back Arrow" class="back-arrow" (click)="voltarFase()"> 
+    <img src="assets/imgs/logotitle.png" alt="Logotitle" class="logo" />
+  </div>
+  
+  <div class="text-container">
+    <div class="h5">
+      Enter your email
+    </div>
+    <div class="body-medium-semibold">
+      Enter your email to register your personal account.
+    </div>
+  </div>
+
+  <ion-grid style="margin-top: -12vw;">
+    <ion-row>
+      <ion-col size="12">
+        <input 
+          placeholder="E-mail" 
+          class="big-input" 
+          [(ngModel)]="email" 
+          (input)="verificarEmail()" 
+          (keyup.enter)="verificarEmail() ? avancarFase() : null"
+          maxlength="100"
+        >
+      </ion-col>
+      <ion-col size="12">
+        <button 
+          class="big-button" 
+          color="primary" 
+          [disabled]="!verificarEmail()" 
+          (click)="avancarFase()"
+        >
+          Confirm
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+
+<!-- Página Cadastro Código -->
+
+<ion-content [fullscreen]="true" *ngIf="fase === 5" [@slideIn]>
+  <div class="header-content">
+    <img src="assets/imgs/back-arrow.png" alt="Back Arrow" class="back-arrow" (click)="voltarFase()"> 
+    <img src="assets/imgs/logotitle.png" alt="Logotitle" class="logo" />
+  </div>
+
+  <div class="text-container">
+    <div class="h5">
+      Enter the confirmation code
+    </div>
+    <div class="body-medium-semibold">
+      Please enter the 6-digit code we sent to <br>
+      your e&#8209;mail&nbsp;&nbsp;<span style="color: #1f2232;"> {{ email | slice:0:3 }}{{ '*'.repeat(email.length - 8) }}{{ email | slice:-5 }} </span>
+    </div>
+  </div>
+  <div class="code-input-container" style="display: flex; justify-content: center; margin-top: 7vw;">
+    <input type="text" maxlength="1" class="single-digit-input code-input" (input)="onCodeInput($event, 0)" #codeInput1>
+    <input type="text" maxlength="1" class="single-digit-input code-input" (input)="onCodeInput($event, 1)" #codeInput2>
+    <input type="text" maxlength="1" class="single-digit-input code-input" (input)="onCodeInput($event, 2)" #codeInput3>
+    <input type="text" maxlength="1" class="single-digit-input code-input" (input)="onCodeInput($event, 3)" #codeInput4>
+    <input type="text" maxlength="1" class="single-digit-input code-input" (input)="onCodeInput($event, 4)" #codeInput5>
+    <input type="text" maxlength="1" class="single-digit-input code-input" (input)="onCodeInput($event, 5)" #codeInput6>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <button class="big-button bottom-button" [disabled]="!allInputsFilled" (click)="avancarFase()">
+          Continue
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+
+<!-- Página Cadastro Senha -->
+
+<ion-content [fullscreen]="true" *ngIf="fase === 6" class="margin" [@slideIn]>
+  <div class="header-content">
+    <img src="assets/imgs/back-arrow.png" alt="Back Arrow" class="back-arrow" (click)="voltarFase()"> 
+    <img src="assets/imgs/logotitle.png" alt="Logotitle" class="logo" />
+  </div>
+  
+  <div class="text-container">
+    <div class="h5">
+      Your access password
+    </div>
+    <div class="body-medium-semibold">
+      Please create an access password for your account.
+    </div>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <div class="password-input-container">
+          <input type="password" placeholder="Password" class="big-input" [(ngModel)]="senha" (ngModelChange)="verificarSenhas()" maxlength="100">
+          <button class="password-toggle" (click)="togglePasswordVisibility($event, 'senha')">
+            <img [src]="senhaVisivel ? 'assets/imgs/open-eye-icon.png' : 'assets/imgs/closed-eye-icon.png'" alt="Alternar visibilidade da senha">
+          </button>
+        </div>
+      </ion-col>
+      <ion-col size="12">
+        <div class="password-input-container">
+          <input type="password" placeholder="Confirm password" class="big-input" [(ngModel)]="confirmacaoSenha" (ngModelChange)="verificarSenhas()" maxlength="100">
+          <button class="password-toggle" (click)="togglePasswordVisibility($event, 'confirmacaoSenha')">
+            <img [src]="confirmacaoSenhaVisivel ? 'assets/imgs/open-eye-icon.png' : 'assets/imgs/closed-eye-icon.png'" alt="Alternar visibilidade da senha">
+          </button>
+        </div>
+      </ion-col>
+
+      <div class="text-container" style="text-align: center; display: flex; justify-content: center; align-items: center;">
+        <div class="body-medium-semibold" (click)="toggleCriterios()" style="color: #3c8dcc; text-decoration: underline;">
+          Password criteria
+        </div>
+      </div>
+
+      <div class="text-container" *ngIf="mostrarCriterios">
+        
+        <div class="body-medium-semibold">
+          The password must meet the following criteria:
+        </div>
+      </div>
+
+      <ion-col size="12">
+        <button class="big-button bottom-button" color="primary" (click)="avancarFase()" [disabled]="!senhasIguais">
+          Continue
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+
+<!-- Página Cadastro Senha Sucesso -->
+
+<ion-content [fullscreen]="true" *ngIf="fase === 7"  class="margin" [@slideIn]>
+  <div class="header-content">
+    <img src="assets/imgs/logotitle.png" alt="Logotitle" class="logo" />
+  </div>
+  
+  <div id="success-icon-container">
+    <img src = "assets/imgs/success.png" width="24%">
+  </div>
+  <div class="text-container" style="text-align: center; position: absolute; bottom: 37%; left: 50%; transform: translateX(-50%); width: 100%;">
+    <div class="h4">
+      Your password was created <br> successfully!
+    </div>
+    <div class="body-xlarge-regular">
+      All set! Now it's just a matter of accessing your account and <br> picking the stories that you'd <br> like to read. Shall we begin?
+    </div>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <button class="big-button bottom-button" (click)="voltarAoInicio()">
+          Access your account
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+</ion-content>
